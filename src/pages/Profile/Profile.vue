@@ -1,20 +1,18 @@
 <template>
   <section class="profile">
-    <header class="header">
-      <HeaderTop title="我的"/>
-    </header>
+    <HeaderTop title="我的"/>
     <section class="profile-number">
-      <router-link to="/login" class="profile-link">
+      <router-link :to="userInfo._id?'/userinfo':'/login'" class="profile-link">
         <div class="profile_image">
           <i class="iconfont icon-hipay-"></i>
         </div>
         <div class="user-info">
-          <p class="user-info-person">登陆/注册</p>
+          <p class="user-info-person" v-if="!userInfo.phone">{{userInfo.name || '登陆/注册'}}</p>
           <p>
             <span class="user-icon">
               <i class="iconfont icon-msnui-tel-green-copy"></i>
             </span>
-            <span class="icon-mobile-number">暂无绑定手机号</span>
+            <span class="icon-mobile-number">{{userInfo.phone || '暂无绑定手机号'}}</span>
           </p>
         </div>
         <span class="arrow">
@@ -78,34 +76,50 @@
     </section>
     <section class="profile_my_order border-1px">
       <a href="javascript:;" class="my_order">
-              <span>
-                <i class="iconfont icon-fuwuzhongxin1-copy"></i>
-              </span>
+        <span>
+          <i class="iconfont icon-fuwuzhongxin1-copy"></i>
+        </span>
         <div class="my_order_div">
           <span>服务中心</span>
           <span class="my_order_icon">
-                  <i class="iconfont icon-jiantou1"></i>
-                </span>
+            <i class="iconfont icon-jiantou1"></i>
+          </span>
         </div>
       </a>
     </section>
+
+    <section class="profile_my_order border-1px" v-if="userInfo._id">
+      <mt-button class="logout" type="danger" @click="logout" style="width: 100%">退出登陆</mt-button>
+    </section>
+
   </section>
 </template>
 
 <script>
-  import HeaderTop from '../../components/HeaderTop/HeaderTop.vue'
+  import {mapState} from 'vuex'
+  import { MessageBox,Toast} from 'mint-ui';
+  import HeaderTop from '../../components/HeaderTop/HeaderTop'
   export default {
-    components: {
+    components:{
       HeaderTop
+    },
+    computed:{
+      ...mapState(['userInfo'])
+    },
+    methods:{
+      logout(){
+        MessageBox.confirm('确定退出登陆吗?').then(action => {
+          this.$store.dispatch('logout')
+          Toast('登出成功')
+        });
+      }
     }
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  @import "../../common/stylus/mixins.styl"
   .profile //我的
     width 100%
-    overflow hidden
     .header //头部公共css
       background-color #02a774
       position fixed
@@ -170,6 +184,7 @@
               margin-right -5px
               width 20px
               height 20px
+              margin-top 8px
               .icon-mobile
                 font-size 30px
                 vertical-align text-top

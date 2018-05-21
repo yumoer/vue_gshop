@@ -6,11 +6,24 @@
 </template>
 
 <script>
-  import FooterGuide from './components/FooterGuide/FooterGuide.vue'
-
+  /*import {reqFoodTypes} from './api'*/
+  import FooterGuide from './components/FooterGuide/FooterGuide'
+  import {mapActions} from 'vuex'
   export default {
-    components: {
-      FooterGuide,
+    mounted(){
+      /*const result = await reqFoodTypes()
+      console.log(result)*/
+      //第一种方式
+      // this.$store.dispatch('getAddress')
+      //第二种方式
+      this.getAddress()
+      this.getUserInfo()
+    },
+    components:{
+      FooterGuide
+    },
+    methods:{
+      ...mapActions(['getAddress','getUserInfo'])
     }
   }
 </script>
@@ -19,5 +32,5 @@
   #app
     width 100%
     height 100%
-    background #f5f5f5
+    background #f3f3f3
 </style>
