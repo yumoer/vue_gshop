@@ -13,8 +13,11 @@ import ShopGoods from '../pages/Shop/ShopGoods/ShopGoods'
 import ShopRatings from '../pages/Shop/ShopRatings/ShopRatings'
 import ShopInfo from '../pages/Shop/ShopInfo/ShopInfo'
 
-Vue.use(VueRouter)
+/*const ShopGoods = () => import('../pages/Shop/ShopGoods/ShopGoods')
+const ShopRatings = ()=> import('../pages/Shop/ShopRatings/ShopRatings')
+const ShopInfo = () => import('../pages/Shop/ShopInfo/ShopInfo')*/
 
+Vue.use(VueRouter)
 
 export default new VueRouter({
   routes:[

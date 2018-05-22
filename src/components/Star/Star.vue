@@ -41,8 +41,9 @@
 <style lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/mixins.styl"
   .star
-    float left
     font-size 0
+    display inline-block;
+    vertical-align: text-top;
     .star-item
       display inline-block
       background-repeat no-repeat
