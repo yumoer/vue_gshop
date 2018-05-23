@@ -1,6 +1,6 @@
 /*包含n个直接更新状态方法的对象*/
 import {RECEIVE_ADDRESS,RECEIVE_CATEGORYS,RECEIVE_SHOPS,RECEIVE_USER_INFO,RESET_USER_INFO,
-  RECEIVE_INFO,RECEIVE_GOODS,RECEIVE_RATINGS,DECREMENT_FOOD_COUNT,INCREMENT_FOOD_COUNT,CLEAR_CART
+  RECEIVE_INFO,RECEIVE_GOODS,RECEIVE_RATINGS,DECREMENT_FOOD_COUNT,INCREMENT_FOOD_COUNT,CLEAR_CART,RECEIVE_SEARCH_SHOPS
 } from './mutation-type'
 import Vue from 'vue'
 export default {
@@ -55,6 +55,10 @@ export default {
     state.cartFoods.forEach(food=>food.count=0)
     //移出购车车中所有购物项
     state.cartFoods = []
+  },
+
+  [RECEIVE_SEARCH_SHOPS](state,{searchShops}){
+    state.searchShops = searchShops
   }
 
 }

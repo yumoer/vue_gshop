@@ -1,8 +1,8 @@
 /*包含n个间接更新状态方法的对象*/
 import {RECEIVE_ADDRESS,RECEIVE_CATEGORYS,RECEIVE_SHOPS,RECEIVE_USER_INFO,RESET_USER_INFO,
-  RECEIVE_RATINGS,RECEIVE_GOODS,RECEIVE_INFO,DECREMENT_FOOD_COUNT,INCREMENT_FOOD_COUNT,CLEAR_CART} from './mutation-type'
+  RECEIVE_RATINGS,RECEIVE_GOODS,RECEIVE_INFO,DECREMENT_FOOD_COUNT,INCREMENT_FOOD_COUNT,CLEAR_CART,RECEIVE_SEARCH_SHOPS} from './mutation-type'
 import {reqAddress,reqFoodCategorys,reqShops,reqUserInfo,reqLogout,
-  reqShopGoods,reqShopInfo,reqShopRatings} from '../api'
+  reqShopGoods,reqShopInfo,reqShopRatings,reqSearchShop} from '../api'
 
 export default {
   //异步获取地址
@@ -105,5 +105,15 @@ export default {
   //同步清除购物车
   clearCart({commit}){
      commit(CLEAR_CART)
+  },
+
+  //异步获取商家商品列表
+  async searchShops({commit,state},keywords){
+    const geohash = state.latitude+','+state.longitude
+    const result = await reqSearchShop(geohash,keywords)
+    if(result.code===0){
+      const searchShops = result.data
+      commit(RECEIVE_SEARCH_SHOPS,{searchShops})
+    }
   }
 }
